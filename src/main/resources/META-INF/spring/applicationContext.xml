@@ -15,9 +15,6 @@
 	<import resource="dubboProviderContext.xml"/>
 	<import resource="dubboConsumerContext.xml"/>
 	
-	<!--调用老的hikefa hessian服务-->
-	<import resource="hessianConsumerContext.xml"/>
-	
 	<!--业务逻辑(事务控制)层 -->
 	<import resource="serviceContext.xml"/>
 	

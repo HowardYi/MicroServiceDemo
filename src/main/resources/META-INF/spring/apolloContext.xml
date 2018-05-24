@@ -9,6 +9,8 @@
 	
 	<!-- 这个是最复杂的配置形式，指示Apollo注入PAID.dubbo namespace的配置到Spring环境中，并且顺序在application前面 -->
 	<apollo:config namespaces="PAID.dubbo" order="2"/>
+	
+	<apollo:config namespaces="POSP.datasource.manager" order="1"/>
 
 	<apollo:config namespaces="PAID.datasource" order="1"/>
 </beans>
