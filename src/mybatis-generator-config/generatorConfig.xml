@@ -3,7 +3,7 @@
 <generatorConfiguration>
 	<context id="context1" targetRuntime="MyBatis3">
 		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
-			connectionURL="jdbc:oracle:thin:@10.213.32.74:1521:orcl"
+			connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:orcl"
 			userId="trade"
 			password="TRADE">
 		</jdbcConnection>
@@ -11,7 +11,6 @@
 			<property name="enableSubPackages" value="false" />
 			<property name="trimStrings" value="true" />
 		</javaModelGenerator>
-		<!--<sqlMapGenerator targetPackage="???" targetProject="spring-sharding-jdbc-example-mybatis-oracle" />-->
 		<javaClientGenerator targetPackage="com.yspay.sample.dubboprovider.repository" targetProject="dubbo-spring-mybatis-sharding-jdbc-oracle-example" type="ANNOTATEDMAPPER">
 			<property name="enableSubPackages" value="false" />
 		</javaClientGenerator>
