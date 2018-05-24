@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!--分布式协调服务-->
+	<bean id="coordinator" class="com.yspay.common.coordinator.Coordinator">
+		<constructor-arg name="zkConfig">
+			<bean class="com.yspay.common.coordinator.ZookeeperConfiguration">
+				<constructor-arg name="serverLists" value="${dubbo.registry.address:10.213.32.120:2181}"/>
+			</bean>			
+		</constructor-arg>	
+	</bean>
+	
+	<!--集群实例命名服务-->
+	<bean id="instanceNoAllocator" class="com.yspay.common.cluster.DistributionInstanceNoAllocator">
+		<constructor-arg name="clusterApplicationName" value="dubboProviderSample"></constructor-arg>
+		<constructor-arg name="coordinator" ref="coordinator"></constructor-arg>
+		<property name="instanceNoListener" ref="IdGeneratorInstanceNoAllocatorListener"></property>
+	</bean>
+	
+	<!--分布式id生成服务-->
+	<bean id="defaultIdGeneratorImpl" class="com.yspay.common.idgenerator.DefaultIdGeneratorImpl" />
+	
+	<!--集群命名服务事件监听-->
+	<bean id="IdGeneratorInstanceNoAllocatorListener" class="com.yspay.common.idgenerator.IdGeneratorInstanceNoAllocatorListener">
+		<property name="idGenerator" ref="defaultIdGeneratorImpl"></property>
+	</bean>
+</beans>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:apollo="http://www.ctrip.com/schema/apollo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.ctrip.com/schema/apollo http://www.ctrip.com/schema/apollo.xsd">
+	<!-- 这个是最简单的配置形式，一般应用用这种形式就可以了，用来指示Apollo注入application namespace的配置到Spring环境中 -->
+	<apollo:config order="3"/>
+	
+	<!-- 这个是最复杂的配置形式，指示Apollo注入PAID.dubbo namespace的配置到Spring环境中，并且顺序在application前面 -->
+	<apollo:config namespaces="PAID.dubbo" order="2"/>
+
+	<apollo:config namespaces="PAID.datasource" order="1"/>
+</beans>

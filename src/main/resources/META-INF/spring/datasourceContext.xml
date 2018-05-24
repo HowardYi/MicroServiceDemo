@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xmlns:rdb="http://www.dangdang.com/schema/ddframe/rdb"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.dangdang.com/schema/ddframe/rdb 
+	http://www.dangdang.com/schema/ddframe/rdb/rdb.xsd">
+	 
+	<!--
+		<bean id="ds_0" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+			<property name="url" value="jdbc:mysql://10.213.32.44:3306/shard_db1"/>
+			<property name="username" value="shardtest"/>
+			<property name="password" value="shardtest"/>
+		</bean>
+
+		<bean id="ds_1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+			<property name="url" value="jdbc:mysql://10.213.32.44:3306/shard_db2"/>
+			<property name="username" value="shardtest"/>
+			<property name="password" value="shardtest"/>
+		</bean>
+		-->
+	
+	<bean id="ds_0" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="${manager.url:jdbc:oracle:thin:@10.213.32.74:1521:orcl}"/>
+		<property name="username" value="${manager.username}"/>
+		<property name="password" value="${manager.password}"/>
+		<property name="defaultAutoCommit" value="false"></property>
+		<property name="initialSize" value="${trade.inisize:3}"/>
+		<property name="maxActive" value="${trade.maxsize:10}"/>	
+		<property name="minIdle" value="${trade.maxidle:2}" />
+		<property name="maxIdle" value="${trade.minidle:2}" />
+		<property name="validationQuery" value="select * from dual"/>
+		<property name="testWhileIdle" value="false" /> 
+		<property name="timeBetweenEvictionRunsMillis" value="600" />	
+	</bean>
+    
+	<bean id="ds_1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+		<property name="url" value="${trade.url:jdbc:oracle:thin:@10.213.32.74:1521:orcl}"/>
+		<property name="username" value="${trade.username}"/>
+		<property name="password" value="${trade.password}"/>
+		<property name="defaultAutoCommit" value="false"></property>
+		<property name="initialSize" value="${trade.inisize:3}"/>
+		<property name="maxActive" value="${trade.maxsize:10}"/>	
+		<property name="maxIdle" value="${trade.maxidle:2}" />
+		<property name="minIdle" value="${trade.minidle:2}" />
+		<property name="validationQuery" value="select * from dual"/>
+		<property name="testWhileIdle" value="false" /> 
+		<property name="timeBetweenEvictionRunsMillis" value="600" />	
+	</bean>
+	
+	<!--简单的取余数算法策略
+		<rdb:strategy id="databaseShardingStrategy" sharding-columns="user_id,order_id" algorithm-class="com.yspay.sample.dubboprovider.datasource.shardingalgorithm.MultiKeyModuloDatabaseShardingAlgorithm"/>
+
+		<rdb:strategy id="tableShardingStrategy" sharding-columns="user_id,order_id" algorithm-class="com.yspay.sample.dubboprovider.datasource.shardingalgorithm.MultiKeyModuloTableShardingAlgorithm"/>
+		-->
+    
+	<!--hash一致性算法策略-->
+	<rdb:strategy id="orderDatabaseShardingStrategy" sharding-columns="user_id,order_id,order_seq_id" algorithm-class="com.yspay.sample.dubboprovider.datasource.shardingalgorithm.OrderMultiKeyModuloDatabaseConsistedHashShardingAlgorithm" />
+	
+	<rdb:strategy id="orderTableShardingStrategy" sharding-columns="user_id,order_id,order_seq_id" algorithm-class="com.yspay.sample.dubboprovider.datasource.shardingalgorithm.OrderMultiKeyModuloTableConsistedHashShardingAlgorithm" />
+    
+	<rdb:strategy id="itemDatabaseShardingStrategy" sharding-columns="user_id,order_id,item_id,order_seq_id" algorithm-class="com.yspay.sample.dubboprovider.datasource.shardingalgorithm.ItemMultiKeyModuloDatabaseConsistedHashShardingAlgorithm" />
+	
+	<rdb:strategy id="itemTableShardingStrategy" sharding-columns="user_id,order_id,item_id,order_seq_id" algorithm-class="com.yspay.sample.dubboprovider.datasource.shardingalgorithm.ItemMultiKeyModuloTableConsistedHashShardingAlgorithm" />
+    
+	<rdb:data-source id="shardingDataSource">
+		<rdb:sharding-rule data-sources="ds_0, ds_1">
+			<rdb:table-rules>
+				<rdb:table-rule logic-table="t_order" actual-tables="t_order_0,t_order_1" database-strategy="orderDatabaseShardingStrategy" table-strategy="orderTableShardingStrategy">
+				</rdb:table-rule>
+				<rdb:table-rule logic-table="t_order_item" actual-tables="t_order_item_0,t_order_item_1" database-strategy="itemDatabaseShardingStrategy" table-strategy="itemTableShardingStrategy"/>
+			</rdb:table-rules>
+			<rdb:binding-table-rules>
+				<rdb:binding-table-rule logic-tables="t_order, t_order_item"/>
+			</rdb:binding-table-rules>
+		</rdb:sharding-rule>
+
+		<rdb:props>
+			<prop key="sql.show">true</prop>
+			<prop key="metrics.enable">true</prop>
+			<prop key="metrics.millisecond.period">100</prop>
+			<prop key="metrics.logger.name">Metric.log</prop>
+		</rdb:props>
+	</rdb:data-source>
+</beans>

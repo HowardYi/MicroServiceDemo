@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd 
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!--一致性hash算法路由表配置-->
+	<bean id="consistedHashRouter" class="com.yspay.common.shard.consistedhash.algorithm.ConsistedHashRouter">
+		<constructor-arg name="config">
+			<bean class="com.yspay.common.shard.consistedhash.config.ShardInfoConfig">
+				<property name="virtualShardNum" value="256"></property>
+				<property  name="logicShardMapVirtualShardsConfig">
+					<map>
+						<entry key="0">
+							<bean class="com.yspay.common.shard.consistedhash.config.Range">
+								<property name="begin" value="0"></property>
+								<property name="end" value="63"></property>
+							</bean>
+						</entry>
+						<entry key="1">
+							<bean class="com.yspay.common.shard.consistedhash.config.Range">
+								<property name="begin" value="64"></property>
+								<property name="end" value="127"></property>
+							</bean>
+						</entry>
+						<entry key="2">
+							<bean class="com.yspay.common.shard.consistedhash.config.Range">
+								<property name="begin" value="128"></property>
+								<property name="end" value="191"></property>
+							</bean>
+						</entry>
+						<entry key="3">
+							<bean class="com.yspay.common.shard.consistedhash.config.Range">
+								<property name="begin" value="192"></property>
+								<property name="end" value="255"></property>
+							</bean>
+						</entry>		
+					</map>
+				</property>
+				<property  name="logicShardMapDBTableConfig">
+					<map>
+						<entry key="0">
+							<bean class="com.yspay.common.shard.consistedhash.config.DatasourceTable">
+								<property name="datasourceIdRef" value="ds_0"></property>
+								<property name="actualTableName" value="_0"></property>
+							</bean>
+						</entry>
+						<entry key="1">
+							<bean class="com.yspay.common.shard.consistedhash.config.DatasourceTable">
+								<property name="datasourceIdRef" value="ds_1"></property>
+								<property name="actualTableName" value="_0"></property>
+							</bean>
+						</entry>
+						<entry key="2">
+							<bean class="com.yspay.common.shard.consistedhash.config.DatasourceTable">
+								<property name="datasourceIdRef" value="ds_0"></property>
+								<property name="actualTableName" value="_1"></property>
+							</bean>
+						</entry>
+						<entry key="3">
+							<bean class="com.yspay.common.shard.consistedhash.config.DatasourceTable">
+								<property name="datasourceIdRef" value="ds_1"></property>
+								<property name="actualTableName" value="_1"></property>
+							</bean>
+						</entry>		
+					</map>
+				</property>
+			</bean>			
+		</constructor-arg>	
+	</bean>
+</beans>

@@ -1,0 +1,42 @@
+<assembly xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.3 http://maven.apache.org/xsd/assembly-1.1.3.xsd">
+
+	<id>release</id>
+	<formats>
+		<format>tar.gz</format>
+		<format>dir</format>
+	</formats>
+
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>/lib</outputDirectory>
+		</dependencySet>
+	</dependencySets>
+
+	<fileSets>
+		<fileSet>
+			<includes>
+				<include>/logs</include>
+			</includes>
+		</fileSet>
+	</fileSets>
+
+	<files>
+		<file>
+			<source>/src/main/resources/dubbo.properties</source>
+			<outputDirectory>conf</outputDirectory>
+		</file>
+		<file>
+			<source>/src/bin/startup.sh</source>
+			<outputDirectory>bin</outputDirectory>
+			<fileMode>0755</fileMode>
+		</file>
+		<file>
+			<source>/src/bin/shutdown.sh</source>
+			<outputDirectory>bin</outputDirectory>
+			<fileMode>0755</fileMode>
+		</file>
+	</files>
+
+</assembly>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+	<context id="context1" targetRuntime="MyBatis3">
+		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+			connectionURL="jdbc:oracle:thin:@10.213.32.74:1521:orcl"
+			userId="trade"
+			password="TRADE">
+		</jdbcConnection>
+		<javaModelGenerator targetPackage="com.yspay.sample.dubboprovider.entity" targetProject="dubbo-spring-mybatis-sharding-jdbc-oracle-example" >
+			<property name="enableSubPackages" value="false" />
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		<!--<sqlMapGenerator targetPackage="???" targetProject="spring-sharding-jdbc-example-mybatis-oracle" />-->
+		<javaClientGenerator targetPackage="com.yspay.sample.dubboprovider.repository" targetProject="dubbo-spring-mybatis-sharding-jdbc-oracle-example" type="ANNOTATEDMAPPER">
+			<property name="enableSubPackages" value="false" />
+		</javaClientGenerator>
+		<table tableName="t_order_item" domainObjectName="OrderItem" 
+			enableInsert="true" 
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			enableDeleteByPrimaryKey="true"
+			selectByPrimaryKeyQueryId="true"
+			enableCountByExample="false" 
+			enableUpdateByExample="false" 
+			enableDeleteByExample="false" 
+			enableSelectByExample="false" 
+			selectByExampleQueryId="false" 
+			>
+		</table>
+		<table tableName="t_order" domainObjectName="Order" 
+			enableInsert="true" 
+			enableSelectByPrimaryKey="true"
+			enableUpdateByPrimaryKey="true"
+			enableDeleteByPrimaryKey="true"
+			selectByPrimaryKeyQueryId="true"
+			enableCountByExample="false" 
+			enableUpdateByExample="false" 
+			enableDeleteByExample="false" 
+			enableSelectByExample="false" 
+			selectByExampleQueryId="false" 
+			>
+		</table>
+	</context>
+</generatorConfiguration>

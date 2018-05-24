@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd">
+	
+	<!-- 集中配置 -->
+	<import resource="apolloContext.xml"/>
+	
+	<!--rpc微服务(api)层 -->
+	<import resource="dubboCommonContext.xml"/>
+	<import resource="dubboProviderContext.xml"/>
+	<import resource="dubboConsumerContext.xml"/>
+	
+	<!--调用老的hikefa hessian服务-->
+	<import resource="hessianConsumerContext.xml"/>
+	
+	<!--业务逻辑(事务控制)层 -->
+	<import resource="serviceContext.xml"/>
+	
+	<!-- dao层 -->
+	<import resource="mybatisContext.xml"/>
+	
+	<!-- datasource(分库分表路由)层 -->
+	<import resource="datasourceContext.xml"/>
+	
+	<!-- 分布式id生成服务 -->
+	<import resource="idGeneratorContext.xml"/>
+	
+	<!-- hash一致性算法 分片规则-->
+	<import resource="shardContext.xml"/>
+</beans>
