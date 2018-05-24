@@ -28,7 +28,7 @@
 	
 	<bean id="ds_0" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="${manager.url:jdbc:oracle:thin:@10.213.32.74:1521:orcl}"/>
+		<property name="url" value="${manager.url}"/>
 		<property name="username" value="${manager.username}"/>
 		<property name="password" value="${manager.password}"/>
 		<property name="defaultAutoCommit" value="false"></property>
@@ -43,7 +43,7 @@
     
 	<bean id="ds_1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="${trade.url:jdbc:oracle:thin:@10.213.32.74:1521:orcl}"/>
+		<property name="url" value="${trade.url}"/>
 		<property name="username" value="${trade.username}"/>
 		<property name="password" value="${trade.password}"/>
 		<property name="defaultAutoCommit" value="false"></property>

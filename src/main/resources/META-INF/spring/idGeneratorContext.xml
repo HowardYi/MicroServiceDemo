@@ -11,7 +11,7 @@
 	<bean id="coordinator" class="com.yspay.common.coordinator.Coordinator">
 		<constructor-arg name="zkConfig">
 			<bean class="com.yspay.common.coordinator.ZookeeperConfiguration">
-				<constructor-arg name="serverLists" value="${dubbo.registry.address:10.213.32.120:2181}"/>
+				<constructor-arg name="serverLists" value="${dubbo.registry.address}"/>
 			</bean>			
 		</constructor-arg>	
 	</bean>
