@@ -4,8 +4,8 @@
 	<context id="context1" targetRuntime="MyBatis3">
 		<jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
 			connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:orcl"
-			userId="trade"
-			password="TRADE">
+			userId="1111"
+			password="1111">
 		</jdbcConnection>
 		<javaModelGenerator targetPackage="com.yspay.sample.dubboprovider.entity" targetProject="dubbo-spring-mybatis-sharding-jdbc-oracle-example" >
 			<property name="enableSubPackages" value="false" />
